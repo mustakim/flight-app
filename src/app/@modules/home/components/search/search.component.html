@@ -1,0 +1,58 @@
+<form [formGroup]="searchForm" autocomplete="off" novalidate (ngSubmit)="handleSearch(searchForm.value)">
+  <div>
+    <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign="center">
+      <div fxFlex.gt-sm="40%">
+        <div fxLayout="column">
+          <mat-form-field class="flight-search-code">
+            <input matInput placeholder="Departure airport code" [formControl]="DepartureAirportCode">
+            <mat-error *ngIf="DepartureAirportCode.hasError('required')"> Departure airport code is required.
+            </mat-error>
+            <mat-error *ngIf="DepartureAirportCode.hasError('minlength')"> Departure airport code must be 3 characters.
+            </mat-error>
+            <mat-error *ngIf="DepartureAirportCode.hasError('maxlength')"> Departure airport code must be 3 characters.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="flight-search-date">
+            <input matInput [matDatepicker]="departureDatePicker" [formControl]="DepartureDate"
+              placeholder="Departure date" [min]="defaultMinDate">
+            <mat-datepicker-toggle matSuffix [for]="departureDatePicker"></mat-datepicker-toggle>
+            <mat-error *ngIf="DepartureDate.hasError('required')"> Departure date is required. </mat-error>
+            <mat-error *ngIf="DepartureDate.hasError('matDatepickerMin')"> Departure date cannot be a past date.
+            </mat-error>
+          </mat-form-field>
+          <mat-datepicker #departureDatePicker></mat-datepicker>
+        </div>
+      </div>
+      <div fxFlex.gt-sm="40%">
+        <div fxLayout="column">
+          <mat-form-field class="flight-search-code">
+            <input matInput [formControl]="ReturnAirportCode" placeholder="Return airport code">
+            <mat-error *ngIf="ReturnAirportCode.hasError('required')"> Return airport code is required. </mat-error>
+            <mat-error *ngIf="ReturnAirportCode.hasError('minlength')"> Return airport code must be 3 characters.
+            </mat-error>
+            <mat-error *ngIf="ReturnAirportCode.hasError('maxlength')"> Return airport code must be 3 characters.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="flight-search-date">
+            <input matInput [matDatepicker]="returnDatePicker" [formControl]="ReturnDate" placeholder="Return date"
+              [min]="DepartureDate.value || defaultMinDate">
+            <mat-datepicker-toggle matSuffix [for]="returnDatePicker"></mat-datepicker-toggle>
+            <mat-error *ngIf="ReturnDate.hasError('required')"> Return date is required. </mat-error>
+            <mat-error *ngIf="ReturnDate.hasError('matDatepickerMin')">
+              <span *ngIf="DepartureDate.value">Return date cannot be before departure date.</span>
+              <span *ngIf="!DepartureDate.value">Return date cannot be a past date.</span>
+            </mat-error>
+          </mat-form-field>
+          <mat-datepicker #returnDatePicker></mat-datepicker>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutAlign="center">
+      <div fxFlex.xs="1" fxFlex.gt-xs="30%" class="flight-search-button">
+        <button type="submit" mat-raised-button color="primary" fxFlex.xs>Search</button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,51 @@
+.search-summary {
+  margin-top: 10px;
+}
+
+.summary-locations {
+  margin-top: 20px;
+  display: flex;
+}
+
+.summary-locations-icon {
+  margin-left: 10px;
+  margin-right: 10px;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.summary-departtime {
+  margin-top: 10px;
+}
+
+.summary-returntime {
+  margin-top: 10px;
+}
+
+.itinerary {
+  margin-bottom: 10px;
+}
+
+.single-flight-info {
+  font-size: 20px;
+  margin-left: 1rem;
+  margin-top: 0.75rem;
+}
+
+.flight-charge {
+  align-items: center !important;
+}
+
+.custom-pagination {
+  width: calc(100vw - 217px);
+}
+
+::ng-deep .custom-pagination pagination-template {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

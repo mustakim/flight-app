@@ -1,0 +1,89 @@
+<mat-toolbar color="primary">
+  <mat-icon class="icon-brand">flight</mat-icon>
+  <a class="navbar-brand ml-4">
+    <span>Flignt Booking</span>
+  </a>
+</mat-toolbar>
+<div>
+  <!-- heading start -->
+  <div class="block text-center mt-6">
+    <h2>Search Flights</h2>
+  </div>
+  <!-- heading end -->
+  <!-- search panel start -->
+  <app-search class="block text-center" (searchClick)="handleSearchClick($event)"></app-search>
+  <!-- search panel end -->
+  <!-- result start -->
+  <ng-container *ngIf="flightFilter && flightData?.length">
+    <div class="px-8">
+      <!-- summary start -->
+      <mat-card class="search-summary mat-subheading-2">
+        <div fxLayout.gt-xs="row" fxLayout.xs="column">
+          <div fxFlex.gt-xs="40%">
+            <div class="summary-locations">
+              <span>{{ flightFilter?.DepartureAirportCode }}</span>
+              <mat-icon class="summary-locations-icon">import_export</mat-icon>
+              <span>{{ flightFilter?.ReturnAirportCode }}</span>
+            </div>
+          </div>
+          <div fxFlex.gt-xs="30%">
+            <div class="summary-departtime">
+              <span><strong>Departure</strong></span>
+              <div>{{ flightFilter?.DepartureDate | date }}</div>
+            </div>
+          </div>
+          <div fxFlex.gt-xs="30%">
+            <div class="summary-returntime">
+              <span><strong>Return</strong></span>
+              <div>{{ flightFilter?.ReturnDate | date }}</div>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+      <!-- summary end -->
+      <!-- flight list start -->
+      <div *ngFor="let flight of flightData | paginate: {  itemsPerPage: 20, currentPage: pageNumber }">
+        <div class="itinerary">
+          <mat-card>
+            <div flLayout="column">
+              <div fxLayout.gt-sm="row" fxLayout.sm="column" fxLayout.xs="column">
+                <div fxFlex.gt-sm="30%" class="flex">
+                  <div class="flex items-center">
+                    <img class="inline" [src]="flight.AirlineLogoAddress" />
+                    <span class="mat-subheading-2 single-flight-info">{{flight.AirlineName}}</span>
+                  </div>
+                </div>
+                <div fxFlex.gt-sm="25%">
+                  <div>
+                    <strong>Outbound Flight Duration</strong>
+                  </div>
+                  <div>
+                    {{ flight.OutboundFlightsDuration }}
+                  </div>
+                  <div>
+                    {{flight.Stops}} Stops </div>
+                </div>
+                <div fxFlex.gt-sm="25%">
+                  <div>
+                    <strong>Inbound Flight Duration</strong>
+                  </div>
+                  <div>
+                    {{ flight.InboundFlightsDuration }}
+                  </div>
+                  <div>
+                    {{flight.Stops}} Stops </div>
+                </div>
+                <div fxFlex.gt-sm="20%" fxFlex.sm="1" fxFlex.xs="1" fxLayoutAlign.gt-sm="end" class="flight-charge">
+                  <span class="mat-subheading-2">{{flight.TotalAmount | currency}}</span>
+                </div>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+      <pagination-controls (pageChange)="onPageChange($event)" class="custom-pagination"></pagination-controls>
+      <!-- flight list end -->
+    </div>
+  </ng-container>
+  <!-- result end -->
+</div>
